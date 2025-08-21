@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/bash
 # Summarize per-site heterozygosity across samples from a VCF.
 # Output: *_het_summary.tsv (CHROM, POS, ID, NUM_HET, PCT_HET)
 
