@@ -9,4 +9,4 @@ awk -F'\t' 'BEGIN { OFS=\"\t\"; print \"CHROM\", \"POS\", \"ID\", \"NUM_HET\", \
   for (i=10; i<=NF; i++) { if (\$i ~ /^0\/1/ || \$i ~ /^1\/0/) n_het++; n_samples++; } \
   pct_het=(n_het/n_samples)*100; \
   printf \"%s\t%s\t%s\t%d\t%.2f%%\\n\", chrom, pos, id, n_het, pct_het; }' {} \
-> het_summaries/{/.}.het_summary.tsv" ::: /path/to/VCF/*.vcf
+> het_summaries/{/.}.het_summary.tsv" ::: /path/to/vcf/*.vcf
