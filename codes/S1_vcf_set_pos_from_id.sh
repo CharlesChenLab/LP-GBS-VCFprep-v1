@@ -1,4 +1,4 @@
-#!/usr/bin/ bash
+#!#!/usr/bin/bash
 # S1_vcf_set_pos_from_id.sh
 # Update VCF POS column from the 3rd underscore-delimited token in the ID column.
 # Usage:
