@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/ bash
 # S1_vcf_set_pos_from_id.sh
 # Update VCF POS column from the 3rd underscore-delimited token in the ID column.
 # Usage:
@@ -8,7 +8,6 @@
 #   zcat input.vcf.gz | S1_vcf_set_pos_from_id.sh - corrected.vcf
 #   S1_vcf_set_pos_from_id.sh input.vcf -   # writes to stdout
 
-set -euo pipefail
 
 in="${1:-}"
 out="${2:-}"
