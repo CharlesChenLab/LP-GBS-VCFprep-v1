@@ -1,3 +1,17 @@
+# Inputs
+IN_DIR="/path/to/biallelic_filtered"
+# Outputs
+OUT_DIR="path/to/tworules_filtered"
+
+find "$IN_DIR" -type f -name '*.vcf' \
+| parallel -j 16 '
+mkdir -p "'"$OUT_DIR"'"
+stem="$(basename {} .vcf)"
+stem="${stem%_biallelic_filtered}"   # strip trailing suffix if present
+out="'"$OUT_DIR"'/${stem}_tworules.vcf"
+log="'"$OUT_DIR"'/${stem}.tworules.log"
+
+python3 - "{}" "$out" > "$log" 2>&1 <<'"'"'PY'"'"'
 from collections import defaultdict
 
 def parse_genotype(gt_str):
@@ -19,8 +33,14 @@ def heterozygosity(genotypes):
 def is_biallelic(alt):
     return "," not in alt
 
-vcf_in = "scaffold1_biallelic_filtered.vcf"
-vcf_out = "scaffold1_tworules.vcf"
+vcf_in = "scaffold_528_biallelic_filtered.vcf"
+vcf_out = "scaffold_528_tworules.vcf"
+
+# ---- ONLY THESE TWO LINES (plus import) ARE ADDED so we can pass paths ----
+import sys
+if len(sys.argv) > 1: vcf_in = sys.argv[1]
+if len(sys.argv) > 2: vcf_out = sys.argv[2]
+# --------------------------------------------------------------------------
 
 header = []
 pos_dict = defaultdict(list)
@@ -75,4 +95,5 @@ for key, recs in pos_dict.items():
 with open(vcf_out, "w") as out:
     out.writelines(header)
     out.writelines(final_records)
-
+PY
+'
